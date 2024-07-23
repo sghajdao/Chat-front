@@ -1,0 +1,45 @@
+<div *ngIf="loged === 0">
+    <h1 class="title">Chat</h1>
+    <div class="container example-button-container">
+        <button routerLink="/" matTooltip="Home" mat-fab color="basic" aria-label="Example icon button with a home icon">
+            <mat-icon>home</mat-icon>
+        </button>
+    </div>
+    <br>
+    
+    <div class="container shadow-lg p-3 mb-5 bg-body rounded" style="height: auto;width: 40%;">
+        <h3 class="text-body-tertiary" style="text-align: center;">Register</h3>
+        <br>
+        <form [formGroup]="userData">
+            <div class="form-floating mb-3 field">
+                <input (keyup.enter)="onSignUp()" type="text" [class]="(validators.firstname && this.userData.get('firstname')!.invalid)? 'form-control border-danger-subtle' : 'form-control'" formControlName="firstname" placeholder="Firstname">
+                <label for="floatingInput">Firstname</label>
+                <span *ngIf="validators.firstname && this.userData.get('firstname')!.invalid" class="text-danger">firstname is required</span>
+            </div>
+            <div class="form-floating mb-3">
+                <input (keyup.enter)="onSignUp()" type="text" [class]="(validators.firstname && this.userData.get('lastname')!.invalid)? 'form-control border-danger-subtle' : 'form-control'" formControlName="lastname" placeholder="Lastname">
+                <label for="floatingPassword">Lastname</label>
+                <span *ngIf="validators.lastname && this.userData.get('lastname')!.invalid" class="text-danger">lastname is required</span>
+            </div>
+            <div class="form-floating mb-3">
+                <input (keyup.enter)="onSignUp()" type="email" [class]="(validators.firstname && this.userData.get('email')!.invalid)? 'form-control border-danger-subtle' : 'form-control'" formControlName="email" placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+                <span *ngIf="validators.email && this.userData.get('email')!.invalid" class="text-danger">email is required</span>
+            </div>
+            <div class="form-floating mb-3">
+                <input (keyup.enter)="onSignUp()" type="password" [class]="(validators.firstname && this.userData.get('password')!.invalid)? 'form-control border-danger-subtle' : 'form-control'" formControlName="password" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+                <span *ngIf="validators.password && this.userData.get('password')!.invalid" class="text-danger">password is required</span>
+            </div>
+        </form>
+        <br>
+        <button mat-raised-button color="primary" style="width: 100%;" (click)="onSignUp()">Sign up</button>
+        <hr>
+        <p class="text-secondary" style="text-align: center;">Already have an account?</p>
+        <button mat-raised-button style="width: 100%;" (click)="onSignIn()">Sign in</button>
+    </div>
+</div>
+    
+<div *ngIf="loged === 1" class="position-absolute top-50 start-50 translate-middle">
+    <mat-spinner></mat-spinner>
+</div>
