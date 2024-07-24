@@ -1,0 +1,45 @@
+.body {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(205, 178, 255);
+}
+
+.header {
+    width: 100%;
+    height: 70px;
+    background-color: rgb(98, 85, 122);
+    display: flex;
+}
+
+.name {
+    margin-top: auto;
+    margin-bottom: auto;
+    color: aliceblue;
+    padding-left: 15px;
+}
+
+.type {
+    position: fixed;
+    bottom: 0;
+    height: 70px;
+    width: calc(100% - 600px);
+}
+
+input {
+    border: none;
+    outline: none;
+    height: 70px;
+    width: 100%;
+    text-indent: 20px;
+    font-size: large;
+    font-family: cursive;
+}
+
+.send {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    height: 70px;
+    width: 200px;
+    background-color: white;
+}

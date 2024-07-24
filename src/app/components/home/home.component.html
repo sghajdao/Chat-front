@@ -1,16 +1,8 @@
-<div class="container">
-    <div class="form-floating" style="margin-top: 30px;">
-        <!-- <form [formGroup]="msg"> -->
-            <textarea [(ngModel)]="message" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-        <!-- </form> -->
-            <label for="floatingTextarea2">Comments</label>
+<div class="page">
+    <div style="width: 400px;height: 100%;">
+        <app-conversations-list></app-conversations-list>
     </div>
-
-    <div style="margin-top: 20px;">
-        <button type="button" class="btn btn-success" (click)="onSendMessage()">Success</button>
-    </div>
-
-    <div *ngIf="receivedMessages.length">
-        <div *ngFor="let item of receivedMessages">{{item}}</div>
+    <div style="width: calc(100% - 400px)">
+        <app-conversation-body></app-conversation-body>
     </div>
 </div>
