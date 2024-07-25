@@ -3,10 +3,10 @@
         <h6 class="title">Saad Chat</h6>
         <div class="me">
             <div style="display: flex;">
-                <img src="../../../../assets/sghajdao.jpg" alt="">
-                <p style="color: aliceblue;margin-top: auto;margin-bottom: auto;padding-left: 10px;">Saad Alaoui</p>
+                <img (click)="openProfile()" [src]="user?.image? 'http://localhost:8181/api/image/' + user?.image:'../../../../assets/Unknown_person.jpg'" alt="">
+                <p (click)="openProfile()" class="name">{{user?.firstname}} {{user?.lastname}}</p>
             </div>
-            <div class="logout">
+            <div (click)="logout()" class="logout">
                 <p style="color: aliceblue;text-align: center;">logout</p>
             </div>
         </div>

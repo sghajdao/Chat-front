@@ -1,0 +1,26 @@
+<div class="profile">
+    <div style="height: 30px;"></div>
+    <!-- <button mat-raised-button>Basic</button> -->
+    <div *ngIf="edit" style="padding-left: 20px;position: absolute;">
+        <button (click)="saveEdit()" type="button" class="btn btn-primary">Save</button>
+    </div>
+    <div class="my-data">
+        <div class="image">
+            <div class="circl">
+                <label for="customFile" style="cursor: pointer;">
+                    <img class="img" id="selectedImage" [src]="selectedImage"
+                        alt="example placeholder"
+                        onerror="this.src='../../../../assets/Unknown_person.jpg'">
+                    <input type="file" class="form-control d-none" id="customFile" (change)="onImageSelected($event)"/>
+                </label>
+            </div>
+            <h6 class="name">{{user?.firstname}} {{user?.lastname}}</h6>
+        </div>
+
+        <!-- <div class="card">
+            <h6 class="name">Saad Alaoui</h6>
+            <h6 class="country">saadghajdaoui&#64;gmail.com</h6>
+            <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+        </div> -->
+    </div>
+</div>

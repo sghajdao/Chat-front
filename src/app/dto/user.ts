@@ -7,5 +7,6 @@ export interface User {
     email: string,
     password: string
     verifiedEmail?: boolean,
+    image: string,
     role: Role,
 }
