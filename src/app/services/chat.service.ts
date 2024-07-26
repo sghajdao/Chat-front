@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CompatClient, IMessage, Stomp } from '@stomp/stompjs';
 import { BehaviorSubject } from 'rxjs';
 import SockJS from 'sockjs-client';
+import { MessageRequest } from '../dto/message-request';
 
 @Injectable({
   providedIn: 'root'
@@ -9,31 +10,31 @@ import SockJS from 'sockjs-client';
 export class ChatService {
 
   constructor() {
-    this.initializeWebSocketConnection();
   }
   
   stompClient?: CompatClient;
   messages = new BehaviorSubject<string[]>([])
   messages$ = this.messages.asObservable()
   
-  initializeWebSocketConnection() {
+  initializeWebSocketConnection(id: number) {
     const serverUrl = 'http://localhost:8181/ws';
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
     const that = this;
-    // tslint:disable-next-line:only-arrow-functions
+
     this.stompClient.connect({}, function(frame:IMessage) {
-      that.stompClient?.subscribe('/message', (message:IMessage) => {
+      that.stompClient?.subscribe('/message' + id, (message:IMessage) => {
         if (message.body) {
-          const msg: string[] = that.messages.value
-          msg.push(message.body)
+          const messageObj = JSON.parse(message.body);
+          let msg: string[] = that.messages.value
+          msg.push(messageObj.content);
           that.messages.next(msg);
         }
       });
     });
   }
   
-  sendMessage(message:string) {
-    this.stompClient?.send('/app/hello' , {}, message);
+  sendMessage(request: MessageRequest) {
+    this.stompClient?.send('/app/hello' , {}, JSON.stringify(request));
   }
 }

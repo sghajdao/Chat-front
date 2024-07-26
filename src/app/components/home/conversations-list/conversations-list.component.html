@@ -3,7 +3,7 @@
         <h6 class="title">Saad Chat</h6>
         <div class="me">
             <div style="display: flex;">
-                <img (click)="openProfile()" [src]="user?.image? 'http://localhost:8181/api/image/' + user?.image:'../../../../assets/Unknown_person.jpg'" alt="">
+                <img class="mypic" (click)="openProfile()" [src]="user?.image? 'http://localhost:8181/api/image/' + user?.image:'../../../../assets/Unknown_person.jpg'" alt="">
                 <p (click)="openProfile()" class="name">{{user?.firstname}} {{user?.lastname}}</p>
             </div>
             <div (click)="logout()" class="logout">
@@ -16,5 +16,11 @@
         <p style="color: aliceblue;padding-top: 15px;padding-left: 10px;">Find users</p>
     </div>
     <hr style="color: aliceblue;">
-    <div></div>
+
+    <div *ngFor="let item of allUsers">
+        <div (click)="openConversation(item)" class="conversation" *ngIf="item.id != user?.id">
+            <img class="user-pic" [src]="item.image? 'http://localhost:8181/api/image/' + item.image:'../../../../assets/Unknown_person.jpg'" [alt]="item.firstname">
+            <h6 style="color: aliceblue;padding-left: 10px;">{{item.firstname}}</h6>
+        </div>
+    </div>
 </div>

@@ -1,17 +1,21 @@
 <div class="body">
     <div class="header">
-        <h6 class="name">Tyler</h6>
+        <h6 class="name">{{friend?.firstname}}</h6>
     </div>
 
     <div style="display: flex;width: 100%;">
+        <div *ngFor="let msg of receivedMessages">
+            <h6>{{msg}}</h6>
+        </div>
+
         <div class="type">
-            <input type="text" name="message" placeholder="Type something ...">
+            <input [(ngModel)]="message" type="text" name="message" placeholder="Type something ...">
         </div>
         <div class="send">
             <div style="width: 40px;height: 40px;">
                 <mat-icon>attach_file</mat-icon>
             </div>
-            <div class="button">Send</div>
+            <div (click)="onSendMessage()" class="button">Send</div>
         </div>
     </div>
 </div>

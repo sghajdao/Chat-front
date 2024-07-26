@@ -13,21 +13,30 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
+    private chatService: ChatService,
   ) {}
 
   subscriptions: Subscription[] = []
   profile: boolean = false
   user?: User
+  conversation?: User
 
   ngOnInit() {
     const sub = this.userService.getUserByEmail().subscribe({
-      next: data => this.user = data
+      next: data => {
+        this.user = data
+        this.chatService.initializeWebSocketConnection(data.id!)
+      }
     })
     this.subscriptions.push(sub)
   }
 
   openProfile(event: boolean) {
     this.profile = event
+  }
+
+  openConversation(event: User) {
+    this.conversation = event
   }
 
   ngOnDestroy(): void {

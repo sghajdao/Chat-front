@@ -3,3 +3,16 @@
     width: 100%;
     height: 100%;
 }
+
+.init {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(205, 178, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h4 {
+    color: rgb(109, 110, 110);
+}

@@ -54,7 +54,7 @@ export class RegisterComponent implements OnDestroy {
           else {
             this.loged = 2
             localStorage.setItem('token', response.token)
-            this.router.navigateByUrl('/verify-email')
+            // this.router.navigateByUrl('/verify-email')
           }
         }
       })

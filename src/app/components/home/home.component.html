@@ -1,9 +1,12 @@
 <div class="page">
     <div style="width: 400px;height: 100%;">
-        <app-conversations-list (profile)="openProfile($event)" [user]="user"></app-conversations-list>
+        <app-conversations-list (profile)="openProfile($event)" (conversation)="openConversation($event)" [user]="user"></app-conversations-list>
     </div>
     <div style="width: calc(100% - 400px)">
-        <app-conversation-body *ngIf="!profile"></app-conversation-body>
+        <app-conversation-body *ngIf="!profile && conversation" [friend]="conversation" [user]="user"></app-conversation-body>
         <app-profile *ngIf="profile" [user]="user"></app-profile>
+        <div *ngIf="!conversation" class="init">
+            <h4>Select a conversation</h4>
+        </div>
     </div>
 </div>

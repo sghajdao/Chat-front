@@ -37,6 +37,10 @@ export class UserService {
     return this.http.put<User>(environment.urlRequest + 'user/edit', user, this.getHeaders());
   }
 
+  getAllUsers() {
+    return this.http.get<User[]>(environment.urlRequest + 'user/all', this.getHeaders());
+  }
+
   private getHeaders(){
     const accessToken = localStorage.getItem("token");
     const headers = { Authorization: `Bearer ${accessToken}` };
