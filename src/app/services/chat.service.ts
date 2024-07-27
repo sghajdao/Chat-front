@@ -3,6 +3,7 @@ import { CompatClient, IMessage, Stomp } from '@stomp/stompjs';
 import { BehaviorSubject } from 'rxjs';
 import SockJS from 'sockjs-client';
 import { MessageRequest } from '../dto/message-request';
+import { Message } from '../dto/message';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ChatService {
   }
   
   stompClient?: CompatClient;
-  messages = new BehaviorSubject<string[]>([])
+  messages = new BehaviorSubject<Message[]>([])
   messages$ = this.messages.asObservable()
   
   initializeWebSocketConnection(id: number) {
@@ -26,8 +27,8 @@ export class ChatService {
       that.stompClient?.subscribe('/message' + id, (message:IMessage) => {
         if (message.body) {
           const messageObj = JSON.parse(message.body);
-          let msg: string[] = that.messages.value
-          msg.push(messageObj.content);
+          let msg: Message[] = that.messages.value
+          msg.push(messageObj);
           that.messages.next(msg);
         }
       });

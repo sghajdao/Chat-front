@@ -1,35 +1,47 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ChatService } from '../../../services/chat.service';
 import { User } from '../../../dto/user';
 import { ConversationService } from '../../../services/conversation.service';
 import { ConversationRequest } from '../../../dto/conversation-request';
 import { Conversation } from '../../../dto/conversation';
 import { MessageRequest } from '../../../dto/message-request';
+import { Subscription } from 'rxjs';
+import { IMessage } from '@stomp/stompjs';
+import { Message } from '../../../dto/message';
 
 @Component({
   selector: 'app-conversation-body',
   templateUrl: './conversation-body.component.html',
   styleUrl: './conversation-body.component.css'
 })
-export class ConversationBodyComponent implements OnInit, OnChanges {
+export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked {
 
   constructor(
     private chatService: ChatService,
     private conversationService: ConversationService,
   ) {}
 
-  // messages: Message[] = []
-  // msg = new FormGroup({message: new FormControl})
   @Input() friend?: User
   @Input() user?: User
   conversation?: Conversation
   message: string = '';
-  receivedMessages: string[] = [];
+  receivedMessages: Message[] = [];
+  subscriptions: Subscription[] = []
+  @ViewChild('scrollContainer') myScrollContainer?: ElementRef;
 
   ngOnInit() {
-    this.chatService.messages$.subscribe({
-      next: msg => this.receivedMessages = msg
+    const sub = this.chatService.messages$.subscribe({
+      next: msg => {
+        this.receivedMessages = msg
+      }
     })
+    this.subscriptions.push(sub)
+  }
+
+  ngAfterViewChecked() {        
+    if (this.myScrollContainer) {
+      this.myScrollContainer!.nativeElement.scrollTop = this.myScrollContainer?.nativeElement.scrollHeight
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -38,12 +50,13 @@ export class ConversationBodyComponent implements OnInit, OnChanges {
         sender: this.user?.id!,
         receiver: this.friend?.id!
       }
-      this.conversationService.getConversation(request).subscribe({
+      const sub = this.conversationService.getConversation(request).subscribe({
         next: data => {
           this.conversation = data
-          this.conversation.messages.forEach(msg => this.receivedMessages.push(msg.content))
+          this.conversation.messages.forEach(msg => this.receivedMessages.push(msg))
         }
       })
+      this.subscriptions.push(sub)
     }
   }
 
@@ -58,5 +71,10 @@ export class ConversationBodyComponent implements OnInit, OnChanges {
       this.chatService.sendMessage(request);
       this.message = ''
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe())
+    this.chatService.messages.next([])
   }
 }

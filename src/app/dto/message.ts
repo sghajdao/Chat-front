@@ -1,3 +1,4 @@
+import { Conversation } from "./conversation";
 import { User } from "./user";
 
 export interface Message {
@@ -5,4 +6,5 @@ export interface Message {
     content: string,
     sender: User,
     receiver: User,
+    conversation: Conversation,
 }

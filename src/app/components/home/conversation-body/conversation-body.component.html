@@ -3,13 +3,28 @@
         <h6 class="name">{{friend?.firstname}}</h6>
     </div>
 
-    <div style="display: flex;width: 100%;">
+    <div class="messages" #scrollContainer>
         <div *ngFor="let msg of receivedMessages">
-            <h6>{{msg}}</h6>
+            <div class="sent" *ngIf="msg.sender.id === user?.id">
+                <div class="sent-msg">
+                    {{msg.content}}
+                </div>
+                <img class="sender-img" [src]="!user?.image? '../../../../assets/Unknown_person.jpg':'http://localhost:8181/api/image/' + user?.image" alt="">
+            </div>
+            <br>
+            <div class="received" *ngIf="msg.sender.id !== user?.id">
+                <img class="receiver-img" [src]="!friend?.image? '../../../../assets/Unknown_person.jpg':'http://localhost:8181/api/image/' + friend?.image" alt="">
+                <div class="received-msg">
+                    {{msg.content}}
+                </div>
+            </div>
+            <br>
         </div>
+    </div>
 
+    <div style="display: flex;">
         <div class="type">
-            <input [(ngModel)]="message" type="text" name="message" placeholder="Type something ...">
+            <input (keyup.enter)="onSendMessage()" [(ngModel)]="message" type="text" name="message" placeholder="Type something ...">
         </div>
         <div class="send">
             <div style="width: 40px;height: 40px;">

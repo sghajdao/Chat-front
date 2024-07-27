@@ -11,6 +11,16 @@
     display: flex;
 }
 
+.messages {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 140px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-width: 0.4rem;
+}
+
 .name {
     margin-top: auto;
     margin-bottom: auto;
@@ -18,11 +28,81 @@
     padding-left: 15px;
 }
 
+.sent-msg {
+    color: white;
+    position: relative;
+    border-radius: 10px 0px 10px 10px;
+    max-width: 60%;
+    min-height: 40px;
+    min-width: 50px;
+    padding: 5px 20px 5px 20px;
+    text-align: center;
+    /* display: inline-block; */
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    /* float: right;
+    clear: both; */
+    right: 10px;
+    background-color: rgb(99, 162, 221);
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.sender-img {
+    position: relative;
+    /* display: inline-block; */
+    float: right;
+    clear: both;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.sent {
+    position: relative;
+    /* display: inline-block; */
+    float: right;
+    clear: both;
+    right: 10px;
+    display: flex;
+}
+
+.received {
+    display: flex;
+}
+
+.received-msg {
+    color: black;
+    border-radius: 0px 10px 10px 10px;
+    background-color: aliceblue;
+    max-width: 60%;
+    min-height: 40px;
+    min-width: 50px;
+    padding: 5px 20px 5px 20px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.receiver-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
 .type {
-    position: fixed;
+    position: relative;
     bottom: 0;
     height: 70px;
-    width: calc(100% - 600px);
+    width: calc(100% - 200px);
 }
 
 input {
@@ -36,7 +116,7 @@ input {
 }
 
 .send {
-    position: fixed;
+    position: relative;
     right: 0;
     bottom: 0;
     height: 70px;
