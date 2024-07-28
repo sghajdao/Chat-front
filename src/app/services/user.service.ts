@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import { User } from '../dto/user';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { BlockRequest } from '../dto/block-request';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,14 @@ export class UserService {
 
   getAllUsers() {
     return this.http.get<User[]>(environment.urlRequest + 'user/all', this.getHeaders());
+  }
+
+  blockUser(request: BlockRequest) {
+    return this.http.put<User>(environment.urlRequest + 'user/block', request, this.getHeaders());
+  }
+
+  unblockUser(request: BlockRequest) {
+    return this.http.put<User>(environment.urlRequest + 'user/unblock', request, this.getHeaders());
   }
 
   private getHeaders(){

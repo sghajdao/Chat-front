@@ -7,4 +7,5 @@ export interface Message {
     sender: User,
     receiver: User,
     conversation: Conversation,
+    createdAt: Date,
 }

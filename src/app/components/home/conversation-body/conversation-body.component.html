@@ -1,20 +1,20 @@
-<div class="body">
+<div class="body" *ngIf="user && friend">
     <div class="header">
-        <h6 class="name">{{friend?.firstname}}</h6>
+        <h6 class="name">{{friend.firstname}}</h6>
     </div>
 
-    <div class="messages" #scrollContainer>
+    <div class="messages" #scrollContainer *ngIf="user && friend">
         <div *ngFor="let msg of receivedMessages">
             <div class="sent" *ngIf="msg.sender.id === user?.id">
-                <div class="sent-msg">
+                <div class="sent-msg" [matTooltip]="getDate(msg.createdAt)">
                     {{msg.content}}
                 </div>
-                <img class="sender-img" [src]="!user?.image? '../../../../assets/Unknown_person.jpg':'http://localhost:8181/api/image/' + user?.image" alt="">
+                <img (click)="openProfile(user)" class="sender-img" [src]="!user.image? '../../../../assets/Unknown_person.jpg':'http://localhost:8181/api/image/' + user.image" alt="">
             </div>
             <br>
             <div class="received" *ngIf="msg.sender.id !== user?.id">
-                <img class="receiver-img" [src]="!friend?.image? '../../../../assets/Unknown_person.jpg':'http://localhost:8181/api/image/' + friend?.image" alt="">
-                <div class="received-msg">
+                <img (click)="openProfile(friend)" class="receiver-img" [src]="!friend.image? '../../../../assets/Unknown_person.jpg':'http://localhost:8181/api/image/' + friend.image" alt="">
+                <div class="received-msg" [matTooltip]="getDate(msg.createdAt)">
                     {{msg.content}}
                 </div>
             </div>
@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div style="display: flex;">
+    <div style="display: flex;" *ngIf="!user.blackList?.includes(friend.id!) && !friend.blackList?.includes(user.id!)">
         <div class="type">
             <input (keyup.enter)="onSendMessage()" [(ngModel)]="message" type="text" name="message" placeholder="Type something ...">
         </div>

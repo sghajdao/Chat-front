@@ -3,9 +3,9 @@
         <app-conversations-list (profile)="openProfile($event)" (conversation)="openConversation($event)" [user]="user"></app-conversations-list>
     </div>
     <div style="width: calc(100% - 400px)">
-        <app-conversation-body *ngIf="!profile && conversation" [friend]="conversation" [user]="user"></app-conversation-body>
-        <app-profile *ngIf="profile" [user]="user"></app-profile>
-        <div *ngIf="!conversation" class="init">
+        <app-conversation-body *ngIf="!profile && conversation" (profile)="openProfile($event)" [friend]="conversation" [user]="user"></app-conversation-body>
+        <app-profile *ngIf="profile" [profile]="profile" [user]="user" (newUser)="updateUser($event)"></app-profile>
+        <div *ngIf="!conversation && !profile" class="init">
             <h4>Select a conversation</h4>
         </div>
     </div>

@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { MatIconModule } from '@angular/material/icon';
     HomeRoutingModule,
     FormsModule, 
     ReactiveFormsModule,
-    MatButtonModule, MatDividerModule, MatIconModule
+    MatButtonModule, MatDividerModule, MatIconModule,
+    MatTooltipModule,
   ]
 })
 export class HomeModule { }

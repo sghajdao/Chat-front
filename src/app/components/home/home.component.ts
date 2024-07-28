@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   subscriptions: Subscription[] = []
-  profile: boolean = false
+  profile?: User
   user?: User
   conversation?: User
 
@@ -31,12 +31,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub)
   }
 
-  openProfile(event: boolean) {
+  openProfile(event: User) {
     this.profile = event
   }
 
   openConversation(event: User) {
     this.conversation = event
+  }
+
+  updateUser(event: User) {
+    this.user = event
   }
 
   ngOnDestroy(): void {

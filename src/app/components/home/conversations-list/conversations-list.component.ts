@@ -16,7 +16,7 @@ export class ConversationsListComponent implements OnChanges, OnInit, OnDestroy 
     private userService: UserService,
   ) {}
 
-  @Output() profile = new EventEmitter<boolean>(false)
+  @Output() profile = new EventEmitter<User>()
   @Output() conversation = new EventEmitter<User>()
   @Input() user?: User
   allUsers: User[] = []
@@ -34,12 +34,12 @@ export class ConversationsListComponent implements OnChanges, OnInit, OnDestroy 
   ngOnChanges(changes: SimpleChanges): void {}
 
   openProfile() {
-    this.profile.emit(true)
+    this.profile.emit(this.user)
   }
 
   openConversation(conv: User) {
     this.conversation.emit(conv)
-    this.profile.emit(false)
+    this.profile.emit(undefined)
   }
 
   logout() {
