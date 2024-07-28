@@ -23,6 +23,8 @@ export class ProfileComponent implements OnChanges, OnDestroy {
   @Input() profile?: User
   @Input() user?: User
   @Output() newUser = new EventEmitter<User>()
+  @Output() me = new EventEmitter<User>()
+  @Output() selected = new EventEmitter<User>()
   subscriptions: Subscription[] = []
   selectedFile?: File
   selectedImage: string | ArrayBuffer = ''
@@ -34,10 +36,12 @@ export class ProfileComponent implements OnChanges, OnDestroy {
     this.email = this.userService.getEmail();
     if (this.profile && this.profile.image && this.user) {
       this.selectedImage = 'http://localhost:8181/api/image/' + this.profile.image
+      this.me.emit(this.user)
     }
-    else if (this.profile && this.user)
+    else if (this.profile && this.user) {
       this.user.blackList?.includes(this.profile.id!)? this.block = true: this.block = false
-    
+      this.me.emit(this.user)
+    }
   }
 
   onImageSelected(event :any) {
@@ -93,6 +97,10 @@ export class ProfileComponent implements OnChanges, OnDestroy {
       next: data => {this.block = false;this.newUser.emit(data);this.chatService.updateUser({user: this.user?.id!, block: this.profile?.id!})}
     })
     this.subscriptions.push(sub)
+  }
+
+  selectUser(event: User) {
+    this.selected.emit(event)
   }
 
   ngOnDestroy(): void {

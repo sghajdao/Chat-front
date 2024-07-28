@@ -61,7 +61,9 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
       const sub = this.conversationService.getConversation(request).subscribe({
         next: data => {
           this.conversation = data
+          this.receivedMessages = []
           this.conversation.messages.forEach(msg => this.receivedMessages.push(msg))
+          this.chatService.messages.next(this.receivedMessages)
         }
       })
       this.subscriptions.push(sub)

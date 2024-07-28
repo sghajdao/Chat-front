@@ -38,6 +38,10 @@ export class UserService {
     return this.http.put<User>(environment.urlRequest + 'user/edit', user, this.getHeaders());
   }
 
+  getContacts(id: number) {
+    return this.http.get<User[]>(environment.urlRequest + 'user/all/' + id, this.getHeaders());
+  }
+
   getAllUsers() {
     return this.http.get<User[]>(environment.urlRequest + 'user/all', this.getHeaders());
   }

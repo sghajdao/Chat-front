@@ -19,11 +19,11 @@
     <br>
 
     <div *ngIf="user.id !== profile.id" class="buttons">
-        <button data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="!block" style="width: 100px;height: 60px;" type="button" class="btn btn-outline-danger">Block</button>
-        <button data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="block" style="width: 100px;height: 60px;" type="button" class="btn btn-danger">Blocked</button>
+        <button data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="!block" style="width: 100px;height: 60px;font-size: 23px;" type="button" class="btn btn-outline-danger">Block</button>
+        <button data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="block" style="width: 100px;height: 60px;font-size: 23px;" type="button" class="btn btn-danger">Blocked</button>
     </div>
 
-    
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -49,5 +49,9 @@
                 </div>
             </div>
         </div>
-    </div>      
+    </div>
+    
+    <div style="width: 100%;justify-content: center;display: flex;" *ngIf="user.id === profile.id">
+        <app-all-users [me]="user" (user)="selectUser($event)"></app-all-users>
+    </div>
 </div>

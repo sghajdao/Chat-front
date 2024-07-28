@@ -19,19 +19,22 @@ export class ConversationsListComponent implements OnChanges, OnInit, OnDestroy 
   @Output() profile = new EventEmitter<User>()
   @Output() conversation = new EventEmitter<User>()
   @Input() user?: User
-  allUsers: User[] = []
+  contacts: User[] = []
   subscriptions: Subscription[] = []
 
   ngOnInit(): void {
-    const sub = this.userService.getAllUsers().subscribe({
-      next: data => {
-        this.allUsers = data
-      }
-    })
-    this.subscriptions.push(sub)
   }
 
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.user) {
+      const sub = this.userService.getContacts(this.user.id!).subscribe({
+        next: data => {
+          this.contacts = data
+        }
+      })
+      this.subscriptions.push(sub)
+    }
+  }
 
   openProfile() {
     this.profile.emit(this.user)

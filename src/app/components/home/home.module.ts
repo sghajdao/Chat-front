@@ -11,6 +11,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AllUsersComponent } from '../all-users/all-users.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     HomeComponent,
     ConversationBodyComponent,
     ConversationsListComponent,
-    ProfileComponent
+    ProfileComponent,
+    AllUsersComponent
   ],
   imports: [
     CommonModule,

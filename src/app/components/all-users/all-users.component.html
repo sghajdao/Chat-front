@@ -1,0 +1,10 @@
+<div class="list">
+    <div class="card">
+        <ul class="list-group list-group-flush" *ngFor="let user of allUsers">
+            <li class="list-group-item" *ngIf="user.id !== me?.id" (click)="selectUser(user)">
+                <img [src]="user.image? 'http://localhost:8181/api/image/' + user.image: '../../../assets/Unknown_person.jpg'" [alt]="user.firstname">
+                <h6 style="color: aliceblue;padding-left: 20px;padding-top: 10px;">{{user.firstname}} {{user.lastname}}</h6>
+            </li>
+        </ul>
+    </div>
+</div>

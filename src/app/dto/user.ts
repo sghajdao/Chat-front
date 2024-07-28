@@ -9,5 +9,6 @@ export interface User {
     verifiedEmail?: boolean,
     image: string,
     role: Role,
-    blackList?: number[]
+    blackList?: number[],
+    contact?: User[],
 }

@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   openConversation(event: User) {
     this.conversation = event
+    this.profile = undefined
   }
 
   updateUser(event: User) {
