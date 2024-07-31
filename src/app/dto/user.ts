@@ -1,3 +1,4 @@
+import { Message } from "./message";
 import { Role } from "./role";
 
 export interface User {
@@ -10,5 +11,7 @@ export interface User {
     image: string,
     role: Role,
     blackList?: number[],
+    sendes?: Message[],
+    receives?: Message[],
     contact?: User[],
 }

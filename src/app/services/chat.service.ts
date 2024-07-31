@@ -7,6 +7,7 @@ import { Message } from '../dto/message';
 import { User } from '../dto/user';
 import { BlockRequest } from '../dto/block-request';
 import { Conversation } from '../dto/conversation';
+import { BlokResponse } from '../dto/block-response';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class ChatService {
   messages = new BehaviorSubject<Message | undefined>(undefined)
   messages$ = this.messages.asObservable()
 
-  blocker = new BehaviorSubject<User | undefined>(undefined)
+  blocker = new BehaviorSubject<BlokResponse | undefined>(undefined)
   blocker$ = this.blocker.asObservable()
   
   initializeWebSocketConnection(id: number) {

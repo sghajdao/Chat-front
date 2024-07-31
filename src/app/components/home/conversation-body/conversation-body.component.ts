@@ -37,14 +37,6 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
       }
     })
     this.subscriptions.push(sub)
-
-    // const sub2 = this.chatService.blocker$.subscribe({
-    //   next: data => {
-    //     if (this.friend?.id === data?.id)
-    //       this.friend = data
-    //   }
-    // })
-    // this.subscriptions.push(sub2)
   }
 
   ngAfterViewChecked() {        

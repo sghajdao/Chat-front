@@ -82,3 +82,8 @@
     height: 50px;
     border-radius: 50px;
 }
+
+.last {
+    color: aliceblue;
+    padding-left: 10px;
+}
