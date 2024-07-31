@@ -20,7 +20,10 @@
     <div *ngFor="let item of contacts">
         <div (click)="openConversation(item)" class="conversation" *ngIf="item.id != user?.id">
             <img class="user-pic" [src]="item.image? 'http://localhost:8181/api/image/' + item.image:'../../../../assets/Unknown_person.jpg'" [alt]="item.firstname">
-            <h6 style="color: aliceblue;padding-left: 10px;">{{item.firstname}}</h6>
+            <div>
+                <h6 style="color: aliceblue;padding-left: 10px;">{{item.firstname}}</h6>
+                <!-- <p>{{}}</p> -->
+            </div>
         </div>
     </div>
 </div>

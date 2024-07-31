@@ -32,18 +32,19 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
   ngOnInit() {
     const sub = this.chatService.messages$.subscribe({
       next: msg => {
-        this.receivedMessages = msg
+        if (msg && (msg?.sender.id === this.user?.id || msg?.receiver.id === this.user?.id))
+          this.receivedMessages.push(msg)
       }
     })
     this.subscriptions.push(sub)
 
-    const sub2 = this.chatService.blocker$.subscribe({
-      next: data => {
-        if (this.friend?.id === data?.id)
-          this.friend = data
-      }
-    })
-    this.subscriptions.push(sub2)
+    // const sub2 = this.chatService.blocker$.subscribe({
+    //   next: data => {
+    //     if (this.friend?.id === data?.id)
+    //       this.friend = data
+    //   }
+    // })
+    // this.subscriptions.push(sub2)
   }
 
   ngAfterViewChecked() {        
@@ -63,7 +64,7 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
           this.conversation = data
           this.receivedMessages = []
           this.conversation.messages.forEach(msg => this.receivedMessages.push(msg))
-          this.chatService.messages.next(this.receivedMessages)
+          // this.chatService.messages.next(this.receivedMessages)
         }
       })
       this.subscriptions.push(sub)
@@ -117,6 +118,6 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe())
-    this.chatService.messages.next([])
+    this.chatService.messages.next(undefined)
   }
 }

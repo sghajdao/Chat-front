@@ -6,6 +6,7 @@ import { MessageRequest } from '../dto/message-request';
 import { Message } from '../dto/message';
 import { User } from '../dto/user';
 import { BlockRequest } from '../dto/block-request';
+import { Conversation } from '../dto/conversation';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ChatService {
   }
   
   stompClient?: CompatClient;
-  messages = new BehaviorSubject<Message[]>([])
+  messages = new BehaviorSubject<Message | undefined>(undefined)
   messages$ = this.messages.asObservable()
 
   blocker = new BehaviorSubject<User | undefined>(undefined)
@@ -32,14 +33,13 @@ export class ChatService {
       that.stompClient?.subscribe(`/message${id}`, (message:IMessage) => {
         if (message.body) {
           const messageObj = JSON.parse(message.body);
-          let msg: Message[] = that.messages.value
-          msg.push(messageObj);
-          that.messages.next(msg);
+          // let msg: Conversation[] = that.messages.value.filter(item => item.id !== messageObj.id)
+          // msg.push(messageObj);
+          that.messages.next(messageObj);
         }
       });
 
       that.stompClient?.subscribe(`/user${id}`, (message:IMessage) => {
-        console.log(message.body)
         if (message.body) {
           const userObj = JSON.parse(message.body);
           that.blocker.next(userObj)

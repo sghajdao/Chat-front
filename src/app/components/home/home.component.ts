@@ -29,6 +29,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     })
     this.subscriptions.push(sub)
+
+    const sub2 = this.chatService.blocker$.subscribe({
+      next: data => {
+        if (this.conversation?.id === data?.id)
+          this.conversation = data
+      }
+    })
+    this.subscriptions.push(sub2)
   }
 
   openProfile(event: User) {
