@@ -5,8 +5,9 @@ import { ConversationService } from '../../../services/conversation.service';
 import { ConversationRequest } from '../../../dto/conversation-request';
 import { Conversation } from '../../../dto/conversation';
 import { MessageRequest } from '../../../dto/message-request';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Message } from '../../../dto/message';
+import { ImageService } from '../../../services/image.service';
 
 @Component({
   selector: 'app-conversation-body',
@@ -18,6 +19,7 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
   constructor(
     private chatService: ChatService,
     private conversationService: ConversationService,
+    private imageService: ImageService,
   ) {}
 
   @Input() friend?: User
@@ -28,6 +30,9 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
   receivedMessages: Message[] = [];
   subscriptions: Subscription[] = []
   @ViewChild('scrollContainer') myScrollContainer?: ElementRef;
+  @ViewChild('fileInput', { static: false }) fileInput?: ElementRef;
+  selectedFile?: File
+  selectedImage: string | ArrayBuffer = ''
 
   ngOnInit() {
     const sub = this.chatService.messages$.subscribe({
@@ -56,7 +61,6 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
           this.conversation = data
           this.receivedMessages = []
           this.conversation.messages.forEach(msg => this.receivedMessages.push(msg))
-          // this.chatService.messages.next(this.receivedMessages)
         }
       })
       this.subscriptions.push(sub)
@@ -64,8 +68,9 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
   }
 
   onSendMessage() {
-    if (this.message[0] && this.user && this.friend) {
+    if (this.message[0] && this.user && this.friend && !this.selectedFile) {
       let request: MessageRequest = {
+        type: 'TEXT',
         body: this.message,
         sender: this.user.id!,
         reciever: this.friend.id!,
@@ -73,6 +78,9 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
       }
       this.chatService.sendMessage(request);
       this.message = ''
+    }
+    else if (this.user && this.friend && this.selectedFile) {
+      this.sendImage()
     }
   }
 
@@ -106,7 +114,40 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
         }
     }
     return value.toDateString();
-}
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+
+      const reader = new FileReader();
+        reader.onload = (e) => {
+          this.selectedImage = (e.target?.result!);
+        };
+        reader.readAsDataURL(this.selectedFile); 
+    }
+  }
+
+  sendImage() {
+    if (this.selectedFile && this.user && this.friend && this.conversation) {
+      const formData = new FormData();
+      formData.append('image', this.selectedFile);
+      this.imageService.uploadImage(formData).subscribe({
+        next: data => {
+          let request: MessageRequest = {
+            type: 'FILE',
+            body: 'http://localhost:8181/api/image/' + data.name,
+            sender: this.user?.id!,
+            reciever: this.friend?.id!,
+            conversation: this.conversation?.id!
+          }
+          this.selectedImage = ''
+          this.chatService.sendMessage(request)
+        }
+      })
+    }
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe())
