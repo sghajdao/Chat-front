@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
-import { RegisterRequest } from '../../../dto/registerRequest';
+import { RegisterRequest } from '../../../models/dto/registerRequest';
 
 @Component({
   selector: 'app-register',

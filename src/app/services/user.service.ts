@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
-import { User } from '../dto/user';
+import { User } from '../models/entities/user';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { BlockRequest } from '../dto/block-request';
+import { BlockRequest } from '../models/dto/block-request';
 
 @Injectable({
   providedIn: 'root'

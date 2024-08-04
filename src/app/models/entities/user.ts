@@ -1,5 +1,5 @@
+import { Role } from "../dto/role";
 import { Message } from "./message";
-import { Role } from "./role";
 
 export interface User {
     id?: number,

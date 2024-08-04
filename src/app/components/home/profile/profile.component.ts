@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UserService } from '../../../services/user.service';
-import { User } from '../../../dto/user';
+import { User } from '../../../models/entities/user';
 import { mergeMap, Observable, of, Subscription } from 'rxjs';
 import { ImageService } from '../../../services/image.service';
-import { ImageResponse } from '../../../dto/image-response';
-import { Role } from '../../../dto/role';
+import { ImageResponse } from '../../../models/dto/image-response';
+import { Role } from '../../../models/dto/role';
 import { ChatService } from '../../../services/chat.service';
 
 @Component({

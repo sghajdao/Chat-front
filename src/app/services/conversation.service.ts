@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ConversationRequest } from '../dto/conversation-request';
-import { Conversation } from '../dto/conversation';
+import { ConversationRequest } from '../models/dto/conversation-request';
+import { Conversation } from '../models/entities/conversation';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -15,6 +15,10 @@ export class ConversationService {
 
   getConversation(request: ConversationRequest) {
     return this.http.post<Conversation>(environment.urlRequest + 'conversation/get', request, this.getHeaders())
+  }
+
+  getConversationsByUserId(id: number) {
+    return this.http.get<Conversation[]>(environment.urlRequest + 'conversation/list/' + id, this.getHeaders());
   }
 
   private getHeaders(){

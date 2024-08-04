@@ -1,6 +1,6 @@
 <div class="body" *ngIf="user && friend">
     <div class="header">
-        <h6 class="name">{{friend.firstname}}</h6>
+        <h6 class="name" (click)="openProfile(friend)">{{friend.firstname}}</h6>
     </div>
 
     <div class="messages" #scrollContainer *ngIf="user && friend">
@@ -27,8 +27,16 @@
             <br>
         </div>
 
-        <div class="selected-image" *ngIf="selectedImage">
-            <img style="width: 280px;height: 200px;" [src]="selectedImage" alt="">
+        <div *ngIf="!receivedMessages" style="height: 100%;" class="d-flex justify-content-center align-items-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        <div style="display: flex;align-items: end;width: 100%;justify-content: center;">
+            <div class="selected-image" *ngIf="selectedImage">
+                <img style="width: 280px;height: 200px;" [src]="selectedImage" alt="">
+            </div>
         </div>
     </div>
 
@@ -36,12 +44,40 @@
         <div class="type">
             <input (keyup.enter)="onSendMessage()" [(ngModel)]="message" type="text" name="message" placeholder="Type something ...">
         </div>
+
         <div class="send">
             <div style="width: 40px;height: 40px;">
                 <mat-icon (click)="fileInput.click()">attach_file</mat-icon>
             </div>
-            <div (click)="onSendMessage()" class="button">Send</div>
             <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)">
+
+            <div>
+                <button style="display: flex;justify-content: center;align-items: center;padding: 0;" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>sentiment_neutral</mat-icon>
+                </button>
+                <mat-menu style="display: flex;justify-content: center;" #menu="matMenu">
+                    <button (click)="addEmoji('😂')" mat-menu-item>
+                        <mat-icon style="width: 50px;height: 50px;">😂</mat-icon>
+                    </button>
+                    <button (click)="addEmoji('😄')" mat-menu-item>
+                        <mat-icon style="width: 50px;height: 50px;">😄</mat-icon>
+                    </button>
+                    <button (click)="addEmoji('😃')" mat-menu-item>
+                        <mat-icon style="width: 50px;height: 50px;">😃</mat-icon>
+                    </button>
+                    <button (click)="addEmoji('😊')" mat-menu-item>
+                        <mat-icon style="width: 50px;height: 50px;">😊</mat-icon>
+                    </button>
+                    <button (click)="addEmoji('😉')" mat-menu-item>
+                        <mat-icon style="width: 50px;height: 50px;">😉</mat-icon>
+                    </button>
+                    <button (click)="addEmoji('😍')" mat-menu-item>
+                        <mat-icon style="width: 50px;height: 50px;">😍</mat-icon>
+                    </button>
+                </mat-menu>
+            </div>
+
+            <div (click)="onSendMessage()" class="button">Send</div>
         </div>
     </div>
 </div>

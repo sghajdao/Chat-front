@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RegisterRequest } from '../dto/registerRequest';
-import { LoginRequest } from '../dto/loginRequest';
-import { AuthResponse } from '../dto/authResponse';
+import { RegisterRequest } from '../models/dto/registerRequest';
+import { LoginRequest } from '../models/dto/loginRequest';
+import { AuthResponse } from '../models/dto/authResponse';
 import { environment } from '../../environments/environment';
 import { jwtDecode } from "jwt-decode";
 

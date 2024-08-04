@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { CompatClient, IMessage, Stomp } from '@stomp/stompjs';
 import { BehaviorSubject } from 'rxjs';
 import SockJS from 'sockjs-client';
-import { MessageRequest } from '../dto/message-request';
-import { Message } from '../dto/message';
-import { User } from '../dto/user';
-import { BlockRequest } from '../dto/block-request';
-import { Conversation } from '../dto/conversation';
-import { BlokResponse } from '../dto/block-response';
+import { MessageRequest } from '../models/dto/message-request';
+import { Message } from '../models/entities/message';
+import { BlockRequest } from '../models/dto/block-request';
+import { BlokResponse } from '../models/dto/block-response';
 
 @Injectable({
   providedIn: 'root'

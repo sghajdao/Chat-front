@@ -17,12 +17,22 @@
     </div>
     <hr style="color: aliceblue;">
 
-    <div *ngFor="let item of contacts">
-        <div (click)="openConversation(item)" class="conversation" *ngIf="item.id != user?.id">
-            <img class="user-pic" [src]="item.image? 'http://localhost:8181/api/image/' + item.image:'../../../../assets/Unknown_person.jpg'" [alt]="item.firstname">
-            <div>
-                <h6 style="color: aliceblue;padding-left: 10px;">{{item.firstname}}</h6>
-                <!-- <p>{{}}</p> -->
+    <div class="list">
+        <div *ngIf="contacts">
+            <div *ngFor="let item of contacts">
+                <div (click)="openConversation(item.friend)" class="conversation" *ngIf="item.friend.id != user?.id">
+                    <img class="user-pic" [src]="item.friend.image? 'http://localhost:8181/api/image/' + item.friend.image:'../../../../assets/Unknown_person.jpg'" [alt]="item.friend.firstname">
+                    <div>
+                        <h6 style="color: aliceblue;padding-left: 10px;">{{item.friend.firstname}}</h6>
+                        <p class="lastMsg">{{(item.lastMsg.type === "FILE")? 'Image':item.lastMsg.content}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!contacts" style="height: 100%;" class="d-flex justify-content-center align-items-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
         </div>
     </div>

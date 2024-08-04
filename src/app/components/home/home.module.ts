@@ -12,6 +12,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AllUsersComponent } from '../all-users/all-users.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import { AllUsersComponent } from '../all-users/all-users.component';
     FormsModule, 
     ReactiveFormsModule,
     MatButtonModule, MatDividerModule, MatIconModule,
-    MatTooltipModule,
+    MatTooltipModule, MatMenuModule
   ]
 })
 export class HomeModule { }

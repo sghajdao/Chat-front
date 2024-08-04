@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
-import { User } from '../../dto/user';
+import { User } from '../../models/entities/user';
 
 @Component({
   selector: 'app-home',

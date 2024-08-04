@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { User } from '../../dto/user';
+import { User } from '../../models/entities/user';
 import { Subscription } from 'rxjs';
 
 @Component({

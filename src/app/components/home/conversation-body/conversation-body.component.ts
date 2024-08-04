@@ -1,12 +1,12 @@
-import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ChatService } from '../../../services/chat.service';
-import { User } from '../../../dto/user';
+import { User } from '../../../models/entities/user';
 import { ConversationService } from '../../../services/conversation.service';
-import { ConversationRequest } from '../../../dto/conversation-request';
-import { Conversation } from '../../../dto/conversation';
-import { MessageRequest } from '../../../dto/message-request';
+import { ConversationRequest } from '../../../models/dto/conversation-request';
+import { Conversation } from '../../../models/entities/conversation';
+import { MessageRequest } from '../../../models/dto/message-request';
 import { Observable, Subscription } from 'rxjs';
-import { Message } from '../../../dto/message';
+import { Message } from '../../../models/entities/message';
 import { ImageService } from '../../../services/image.service';
 
 @Component({
@@ -52,6 +52,7 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.user && this.friend) {
+      this.selectedImage = ''
       let request: ConversationRequest = {
         sender: this.user?.id!,
         receiver: this.friend?.id!
@@ -60,7 +61,7 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
         next: data => {
           this.conversation = data
           this.receivedMessages = []
-          this.conversation.messages.forEach(msg => this.receivedMessages.push(msg))
+          this.conversation?.messages.forEach(msg => this.receivedMessages.push(msg))
         }
       })
       this.subscriptions.push(sub)
@@ -125,7 +126,7 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
         reader.onload = (e) => {
           this.selectedImage = (e.target?.result!);
         };
-        reader.readAsDataURL(this.selectedFile); 
+        reader.readAsDataURL(this.selectedFile);
     }
   }
 
@@ -147,6 +148,10 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
         }
       })
     }
+  }
+
+  addEmoji(emoji: string) {
+    this.message = this.message.concat(emoji)
   }
 
   ngOnDestroy(): void {
