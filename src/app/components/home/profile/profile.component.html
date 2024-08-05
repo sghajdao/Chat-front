@@ -51,7 +51,7 @@
         </div>
     </div>
     
-    <div style="width: 100%;justify-content: center;display: flex;" *ngIf="user.id === profile.id">
+    <div style="width: 100%;justify-content: center;display: flex;height: calc(100% - 360px);" *ngIf="user.id === profile.id">
         <app-all-users [me]="user" (user)="selectUser($event)"></app-all-users>
     </div>
 </div>

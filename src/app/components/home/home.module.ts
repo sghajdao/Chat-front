@@ -11,8 +11,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AllUsersComponent } from '../all-users/all-users.component';
 import {MatMenuModule} from '@angular/material/menu';
+import { AllUsersComponent } from './all-users/all-users.component';
 
 
 @NgModule({

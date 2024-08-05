@@ -1,0 +1,42 @@
+<div *ngIf="user && !loading" class="position-absolute top-50 start-50 translate-middle">
+    <div *ngIf="user.verifiedEmail">
+        <img src="../../../assets/virified.png" alt="virified">
+        <h3>Verifed</h3>
+    </div>
+
+    <div *ngIf="!user.verifiedEmail" class="card" style="width: 24rem;">
+        <div *ngIf="sent" class="card-body">
+            <h5 class="card-title">Email verification</h5>
+            <p class="card-text">Enter the number that we sent to <strong>{{user.email}}</strong></p>
+            <form class="d-flex search" [formGroup]="form">
+                <input formControlName="number" class="form-control me-2" type="search" placeholder="XXXXX" aria-label="Search">
+            </form>
+            <div class="buttons">
+                <div>
+                    <button mat-stroked-button color="primary">Resend</button>
+                </div>
+                <div style="padding-left: 10px;">
+                    <button (click)="verifyEmail()" mat-raised-button color="primary">Verify</button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!sent" class="card-body">
+            <h5 class="card-title">Email verification</h5>
+            <p class="card-text">Send the verification number to <strong>{{user.email}}</strong></p>
+            <div style="width: 100%;">
+                <button (click)="sendVerifyNumber()" style="width: 100%;" mat-raised-button color="primary">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="error" class="alert alert-danger" role="alert">
+    False number
+</div>
+
+<div *ngIf="!user || loading" style="height: 100%;" class="d-flex justify-content-center align-items-center">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>

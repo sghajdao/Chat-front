@@ -1,5 +1,17 @@
+.scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-width: 0.4rem;
+    height: 100%;
+    width: 450px;
+    display: flex;
+    justify-content: center;
+}
+
 .list {
     width: 400px;
+    position: relative;
 }
 
 .card {

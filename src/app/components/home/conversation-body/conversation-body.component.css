@@ -73,9 +73,22 @@
     width: 100%;
 }
 
+.sent-date {
+    position: relative;
+    float: right;
+    clear: both;
+    right: 10px;
+    color: rgb(102, 102, 102);
+}
+
 .received {
     display: flex;
     width: 100%;
+}
+
+.received-date {
+    padding-left: 10px;
+    color: rgb(102, 102, 102);
 }
 
 .received-msg {
