@@ -11,6 +11,15 @@
     display: flex;
 }
 
+.writing {
+    display: flex;
+    padding-left: 10px;
+    padding-top: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: rgb(194, 203, 211);
+}
+
 .messages {
     position: relative;
     width: 100%;

@@ -5,9 +5,12 @@ import { ConversationService } from '../../../services/conversation.service';
 import { ConversationRequest } from '../../../models/dto/conversation-request';
 import { Conversation } from '../../../models/entities/conversation';
 import { MessageRequest } from '../../../models/dto/message-request';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Message } from '../../../models/entities/message';
 import { ImageService } from '../../../services/image.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageComponent } from '../../modals/image/image.component';
+import { WritingRequest } from '../../../models/dto/writing-request';
 
 @Component({
   selector: 'app-conversation-body',
@@ -20,6 +23,7 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
     private chatService: ChatService,
     private conversationService: ConversationService,
     private imageService: ImageService,
+    private modal: MatDialog,
   ) {}
 
   @Input() friend?: User
@@ -33,6 +37,7 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
   @ViewChild('fileInput', { static: false }) fileInput?: ElementRef;
   selectedFile?: File
   selectedImage: string | ArrayBuffer = ''
+  isWriting?: WritingRequest
 
   ngOnInit() {
     const sub = this.chatService.messages$.subscribe({
@@ -42,6 +47,11 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
       }
     })
     this.subscriptions.push(sub)
+
+    const sub2 = this.chatService.writing$.subscribe({
+      next: data => this.isWriting = data
+    })
+    this.subscriptions.push(sub2)
   }
 
   ngAfterViewChecked() {        
@@ -152,6 +162,17 @@ export class ConversationBodyComponent implements OnInit, OnChanges, OnDestroy, 
 
   addEmoji(emoji: string) {
     this.message = this.message.concat(emoji)
+  }
+
+  selectImage(link: string) {
+    this.modal.open(ImageComponent, {data: link})
+  }
+
+  writing() {
+    if (this.message.length > 0)
+      this.chatService.isWriting({sender: this.user?.id!, receiver: this.friend?.id!, isWriting: true})
+    if (this.message.length === 0)
+      this.chatService.isWriting({sender: this.user?.id!, receiver: this.friend?.id!, isWriting: false})
   }
 
   ngOnDestroy(): void {

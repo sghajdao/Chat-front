@@ -1,6 +1,7 @@
 <div class="body" *ngIf="user && friend">
     <div class="header">
         <h6 class="name" (click)="openProfile(friend)">{{friend.firstname}}</h6>
+        <p *ngIf="isWriting?.isWriting && isWriting?.sender === friend.id" class="writing">is writing...</p>
     </div>
 
     <div class="messages" #scrollContainer *ngIf="user && friend">
@@ -9,7 +10,7 @@
                 <div *ngIf="msg.type === 'TEXT'" class="sent-msg">
                     {{msg.content}}
                 </div>
-                <div *ngIf="msg.type === 'FILE'" style="padding-right: 10px;">
+                <div *ngIf="msg.type === 'FILE'" (click)="selectImage(msg.content)" style="padding-right: 10px;cursor: pointer;">
                     <img style="width: 280px;height: 200px;" [src]="msg.content" alt="">
                 </div>
                 <img (click)="openProfile(user)" class="sender-img" [src]="!user.image? '../../../../assets/Unknown_person.jpg':'http://localhost:8181/api/image/' + user.image" alt="">
@@ -22,7 +23,7 @@
                 <div *ngIf="msg.type === 'TEXT'" class="received-msg">
                     {{msg.content}}
                 </div>
-                <div *ngIf="msg.type === 'FILE'" style="padding-left: 10px;">
+                <div *ngIf="msg.type === 'FILE'" (click)="selectImage(msg.content)" style="padding-left: 10px;cursor: pointer;">
                     <img style="width: 280px;height: 200px;" [src]="msg.content" alt="">
                 </div>
             </div>
@@ -45,7 +46,7 @@
 
     <div style="display: flex;" *ngIf="!user.blackList?.includes(friend.id!) && !friend.blackList?.includes(user.id!)">
         <div class="type">
-            <input (keyup.enter)="onSendMessage()" [(ngModel)]="message" type="text" name="message" placeholder="Type something ...">
+            <input (change)="writing()" (keyup.enter)="onSendMessage()" [(ngModel)]="message" type="text" name="message" placeholder="Type something ...">
         </div>
 
         <div class="send">
